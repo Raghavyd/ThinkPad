@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00c38a"/>
+      <stop offset="100%" stop-color="#007a5c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer circle -->
+  <circle cx="32" cy="32" r="30" fill="url(#greenGrad)"/>
+
+  <!-- Stylized T as lightbulb -->
+  <path d="M20 22h24v6h-8v14a4 4 0 0 1-8 0V28h-8z" fill="#ffffff"/>
+  <rect x="28" y="44" width="8" height="4" rx="1" fill="#ffffff" opacity="0.8"/>
+</svg>
