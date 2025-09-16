@@ -3,13 +3,14 @@ import { Link } from "react-router"
 import { formatDate } from "../lib/utils"
 import axios from "axios"
 import toast from "react-hot-toast"
+import api from "../lib/axios"
 
 const  NoteCard =({note,setNotes})=>{
     const handleDelete =async(e,id)=>{
         e.preventDefault();
         if(!window.confirm("Delete this?")) return
         try {
-            await axios.delete(`http://localhost:5001/api/notes/${id}`)
+            await api.delete(`notes/${id}`)
             setNotes((prev)=> prev.filter((note)=>note._id != id)) ///get rid of deleted noted.ui turant update after deletion
             toast.success("Notes Deleted Successfully");
         } catch (error) {

@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 import RateLimitedUI from '../Components/RateLimitedUI'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import api from '../lib/axios'
 import axios from 'axios'
 import NoteCard from '../Components/NoteCard'
 import NotesNotFound from '../Components/NotesNotFound'
@@ -11,31 +12,33 @@ const HomePage = () => {
      const [isRateLimited,setIsRateLimited] =useState(false)
     const [notes,setNotes]=useState([])
     const [loading,setLoading] =useState(true)
-    useEffect(()=>{
-        const fetchNotes=async  ()=> {
-            try {
-                const res = await axios.get("http://localhost:5001/api/notes");
-                console.log(res.data)
-                setNotes(res.data)
-                isRateLimited(false)
-            }  catch (error) {
-
-    // Server actually responded with an error (e.g. 429, 404, 500)
-    console.log("Server fetching notes");
-
-    if (error.response.status === 429) {
-      setIsRateLimited(true);
-    } else {
-      toast.error("Failed to load notes");
-    }
-
+    useEffect(() => {
+    const fetchNotes = async () => {
+     try {
+  const res = await api.get("/notes");
+  if (Array.isArray(res.data)) {
+    setNotes(res.data);
+  } else {
+    console.error("Unexpected response:", res.data);
+    setNotes([]); // prevent .map crash
+  }
+  setIsRateLimited(false);
+} catch (error) {
+  if (error.response?.status === 429) {
+    setIsRateLimited(true);
+    setNotes([]); // important
+  } else {
+    toast.error("Failed to load notes");
+    setNotes([]);
+  }
+} finally {
+  setLoading(false);
 }
-finally{
-                setLoading(false)
-            }
-        }
-        fetchNotes()
-    },[])
+
+    };
+
+    fetchNotes();
+  }, []);
   return (
    
     <div >

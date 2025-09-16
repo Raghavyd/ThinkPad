@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { Link, useNavigate, useParams } from 'react-router';
 import ReactMarkdown from "react-markdown";
+import api from '../lib/axios';
 const NoteDetailPage = () => {
   const [save,setSave] = useState(false)
   const [loading ,setLoading] =useState(false);
@@ -48,7 +49,7 @@ const NoteDetailPage = () => {
 
   setSave(true);
   try {
-    await axios.put(`http://localhost:5001/api/notes/${id}`, {
+    await api.put(`/notes/${id}`, {
       title: note.title,
       content: note.content,
     });
@@ -66,7 +67,7 @@ const NoteDetailPage = () => {
  const handleAIGenerate = async () => {
   setLoading(true);
   try {
-    const response = await axios.post("http://localhost:5001/api/notes/ai/generate", {
+    const response = await api.post("/notes/ai/generate", {
       text: note.content,
     });
 
