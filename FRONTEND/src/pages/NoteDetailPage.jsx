@@ -18,7 +18,7 @@ const NoteDetailPage = () => {
     const fetchNotes=async()=>{
       try {
         setLoading(true)
-        const res =await axios.get(`http://localhost:5001/api/notes/${id}`)
+        const res =await api.get(`/notes/${id}`)
         setNote(res.data)
       } catch (error) {
           console.log("error in fetching notes",error);
@@ -33,7 +33,7 @@ const NoteDetailPage = () => {
   const handleDelete = async()=>{
     if(!window.confirm("are you sure ?")) return;
     try {
-      await axios.delete(`http://localhost:5001/api/notes/${id}`)
+      await api.delete(`/notes/${id}`)
       toast.success("note deleted");
       navigate("/")
     } catch (error) {

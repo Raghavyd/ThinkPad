@@ -10,7 +10,7 @@ const  NoteCard =({note,setNotes})=>{
         e.preventDefault();
         if(!window.confirm("Delete this?")) return
         try {
-            await api.delete(`notes/${id}`)
+            await api.delete(`/notes/${id}`)
             setNotes((prev)=> prev.filter((note)=>note._id != id)) ///get rid of deleted noted.ui turant update after deletion
             toast.success("Notes Deleted Successfully");
         } catch (error) {
